@@ -50,7 +50,11 @@ func proover(id int, target string, date string, commit string, queries chan str
 }
 
 func gitpow(target string) (bool string) {
-	date := time.Now().Format(time.RFC3339)
+	date := os.Getenv("GIT_COMMITTER_DATE")
+	if date == "" {
+		date = time.Now().Format(time.RFC3339)
+	}
+
 	git_init(date)
 	commit := git_commit()
 	old_message := git_message(commit)

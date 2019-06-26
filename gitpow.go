@@ -99,7 +99,7 @@ func gitpow(target string) (bool string) {
 
 func git_update(date string, new_message string) {
 	date_exp := fmt.Sprintf("GIT_COMMITTER_DATE=%v", date)
-	cmd := exec.Command("git", "commit", "--amend", "-m", new_message)
+	cmd := exec.Command("git", "commit", "--amend", "--allow-empty", "--no-gpg-sign", "-m", new_message)
 	cmd.Env = append(os.Environ(), date_exp)
 	cmd.Run()
 }
@@ -108,7 +108,7 @@ func git_init(date string) {
 	date_exp := fmt.Sprintf("GIT_COMMITTER_DATE=%v", date)
 	date_arg := fmt.Sprintf("--date=%v", date)
 
-	cmd := exec.Command("git", "commit", "--amend", "--no-edit", date_arg)
+	cmd := exec.Command("git", "commit", "--amend", "--no-gpg-sign", "--no-edit", date_arg)
 	cmd.Env = append(os.Environ(), date_exp)
 	cmd.Run()
 }
